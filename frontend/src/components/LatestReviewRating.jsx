@@ -9,11 +9,15 @@ const LatestReviewRating = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch(`${backendUrl}/api/reviews`);  // Ensure /api/reviews is correct route
+        const response = await fetch(`${backendUrl}/api/reviews`);
         const data = await response.json();
 
         if (data.reviews) {
-          setReviews(data.reviews.slice(0, 5));  // Latest 5 reviews
+          // Sort by createdAt (newest first), then take top 5
+          const sorted = data.reviews
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 5);
+          setReviews(sorted);
         }
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -46,7 +50,7 @@ const LatestReviewRating = () => {
       <div className="grid md:grid-cols-2 gap-6">
         {reviews.map((review) => (
           <div
-            key={review._id || review.createdAt}  // Unique key fallback
+            key={review._id || review.createdAt}
             className="bg-white border rounded-lg shadow-md p-5 hover:shadow-lg transition duration-300"
           >
             <div className="flex justify-between items-center mb-2">
@@ -67,3 +71,4 @@ const LatestReviewRating = () => {
 };
 
 export default LatestReviewRating;
+
