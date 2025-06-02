@@ -47,3 +47,11 @@
 
 **Database:**
 - MongoDB with Mongoose
+
+## 🛠️ Setup Instructions
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/your-username/bookbuzz-admin.git
+cd bookbuzz-admin
